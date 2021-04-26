@@ -18,7 +18,7 @@ from gensim.models import Word2Vec
 import nltk
 from nltk.corpus import stopwords 
 from nltk.tokenize import word_tokenize
-from nltk.stem.snowball import SnowballStemmer.
+from nltk.stem.snowball import SnowballStemmer
 nltk.download('stopwords')
 nltk.download('punkt')
 

@@ -1,4 +1,4 @@
-import utils
+from models.utils import *
 
 
 class BM25(myModel):

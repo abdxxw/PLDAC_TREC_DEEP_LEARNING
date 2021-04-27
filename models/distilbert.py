@@ -3,6 +3,7 @@ from models.utils import *
 from models.model import myModel
 import os
 from sentence_transformers import SentenceTransformer
+import torch
 
 class DistilBert(myModel):
 
@@ -28,17 +29,20 @@ class DistilBert(myModel):
         j = 1
         batch_emb = []
         for i in range(searcher.num_docs):
-            if i+1 % batch_size == 0:
-                print(i," documens done.")
+            if (i+1) % batch_size == 0:
+                print("encoding batch : ",j)
                 emb = self.model.encode(batch_emb)
                 np.save(folder+"/msmarco-passage"+str(j)+".npy", emb)
+                print(i," documens done.")
                 emb = None
                 j+=1
                 batch_emb = []
-            chaine=searcherPassages.doc(i).raw()
+            chaine=searcher.doc(i).raw()
             chaine=json.loads(chaine)['contents']
             batch_emb.append(chaine)
-                
+
+        emb = self.model.encode(batch_emb)
+        np.save(folder+"/msmarco-passage"+str(j)+".npy", emb)
                 
                 
     def get_scorces_query(self, id,query,k):

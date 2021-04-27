@@ -1,4 +1,0 @@
-pyserini
-fasttext
-pytrec_eval
-sentence_transformers

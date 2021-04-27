@@ -12,7 +12,7 @@ class BM25(myModel):
         else:
             self.searcher = SimpleSearcher(self.data)
 
-    def get_scorces_query(self, query,k):
+    def get_scorces_query(self, id,query,k):
         hits = self.searcher.search(query, k)
         out = dict()
         for hit in hits:

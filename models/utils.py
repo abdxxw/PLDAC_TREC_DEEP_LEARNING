@@ -92,9 +92,31 @@ def trec_eval(qrels,run,metrics=["map","ndcg","P_10","Rprec","recip_rank"]):
         
     return out
 
+def qrels_parser(file):
+  with open(file, 'r') as f: 
+    lignes =f.readlines()
+    out = dict()
+    for l in lignes:
+      line = l.split()
+      out[line[0]] = out.get(line[0],[]) + [line[2]]
+  return out
+  
+
+def queries_parser(file):
+  with open(file, 'r') as f: 
+    lignes =f.readlines()
+    out = dict()
+    for l in lignes:
+      line = l.split()
+      out[line[0]] = ' '.join(line[1:])
+  return out
+
+def run_parser(file):
+  with open(file, 'r') as f_run:
+      return pytrec_eval.parse_run(f_run)
 
 
-def combine_BM25(fileSave, firstResults, secondResults, alpha, modelName):
+def combine_models(fileSave, firstResults, secondResults, alpha, modelName):
     
     with open(firstResults, 'r') as fst:
         runfst = pytrec_eval.parse_run(fst)

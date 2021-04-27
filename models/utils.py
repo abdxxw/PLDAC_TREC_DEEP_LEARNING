@@ -13,7 +13,7 @@ import fasttext
 import fasttext.util
 
 from gensim.models import Word2Vec
-
+import gensim
 
 import nltk
 from nltk.corpus import stopwords 

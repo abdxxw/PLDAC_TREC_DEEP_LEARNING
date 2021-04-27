@@ -12,11 +12,15 @@ class Fasttext(myModel):
         self.model = fasttext.load_model('cc.en.300.bin')
         self.searcher = searcher
 
+    def set_firststage(self,file):
+        self.firststage= file
+        
     def get_scorces_query(self, id,query,k):
         oldrun = run_parser(self.firststage)
+        q_results = oldrun.get(id,dict())
         out = dict()
         
-        for key,score in oldrun.items():
+        for key,score in q_results.items():
 
             query = prepareText(query)
 

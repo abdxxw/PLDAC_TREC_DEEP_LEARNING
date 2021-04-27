@@ -24,9 +24,6 @@ class DistilBert(myModel):
         self.model = self.model.to(device)
         self.index = None
         self.searcher = SimpleSearcher.from_prebuilt_index("msmarco-passage")
-        self.mapping = dict()
-        for i in range(self.searcher.num_docs):
-            self.mapping[i] = self.searcher.doc(i).docid()
 
             
     #must have a fast GPU and a big RAM storage
@@ -82,6 +79,6 @@ class DistilBert(myModel):
         emb = self.model.encode(query)
         hits = self.index.search(emb,k,0.01)
         for hit in hits:
-            out[self.mapping[hit[0]]] = 1-hit[1]
+            out[self.searcher.doc(hit[0]).docid()] = 1-hit[1]
 
         return out

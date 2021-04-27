@@ -5,6 +5,8 @@ import os
 from sentence_transformers import SentenceTransformer
 import torch
 import ngtpy
+import gdown
+
 
 
 class DistilBert(myModel):
@@ -27,7 +29,7 @@ class DistilBert(myModel):
 
             
     #must have a fast GPU and a big RAM storage
-    def generate_embeddings(self,folder,batch_size=1000000):
+    def generate_embeddings(self,batch_size=1000000):
         print("Warning : heavy operation , must have fast GPU and sufficent RAM storage...")
         
         j = 1
@@ -39,7 +41,7 @@ class DistilBert(myModel):
             if (i+1) % batch_size == 0:
                 print("encoding batch : ",j)
                 emb = self.model.encode(batch_emb)
-                np.save(folder+"/msmarco-passage"+str(j)+".npy", emb)
+                np.save("pieces/msmarco-passage"+str(j)+".npy", emb)
                 print(i+1," documens done.")
                 emb = None
                 j+=1
@@ -48,13 +50,13 @@ class DistilBert(myModel):
         np.save(folder+"/msmarco-passage"+str(j)+".npy", emb)
     
     #must respect the generation conditions
-    def generate_index(self,folder,index_path):
+    def generate_index(self,index_path):
         n = len(os.listdir("file"))
         ngtpy.create(index_path, 768, distance_type='Cosine')
         index = ngtpy.Index(index_path)
         j=0
         for i in range(n):
-            liste = np.load(folder+"/msmarco-passage"+str(i)+".npy",mmap_mode='r')
+            liste = np.load("pieces/msmarco-passage"+str(i)+".npy",mmap_mode='r')
             for l in liste:
                 l = list(map(float,list(l)))
                 index.insert(l) # insert objects
@@ -72,7 +74,24 @@ class DistilBert(myModel):
         self.index = ngtpy.Index(index_path)
         
     def from_prebuilt_index():
-        pass
+        grp = 'https://drive.google.com/uc?id=1-9s3OtgVzO46Fxy9ZUHS5wajKA-Z27iZ'
+        grp_out = 'indexes/emb/grp'
+        
+        obj = 'https://drive.google.com/uc?id=1-H0mwdF37FO-iIeNfjwtTeseN_1Tc7nT'
+        obj_out = 'indexes/emb/obj'
+        
+        prf = 'https://drive.google.com/uc?id=1-3HNZMinyvT9EmM2H3QMSJMTAz9O1uGu'
+        prf_out = 'indexes/emb/prf'
+        
+        tre = 'https://drive.google.com/uc?id=1-1BPb-FGSA32gx_zrXh6guTOkQ9GuSSS'
+        tre_out = 'indexes/emb/tre'
+        
+        gdown.download(grp, output, quiet=False)
+        gdown.download(obj, obj_out, quiet=False)
+        gdown.download(prf, prf_out, quiet=False)
+        gdown.download(tre, tre_out, quiet=False)
+        
+        self.load_index("indexes/emb")
             
     def get_scorces_query(self, id,query,k):
         out = dict()

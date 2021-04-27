@@ -3,3 +3,4 @@ fasttext
 pytrec_eval
 sentence_transformers
 ngt
+gdown

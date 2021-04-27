@@ -70,10 +70,10 @@ class DistilBert(myModel):
         index.save()    
         
         
-    def load_index(self,index_path):
+    def load_index(self,index_path="indexes/emb"):
         self.index = ngtpy.Index(index_path)
         
-    def from_prebuilt_index():
+    def from_prebuilt_index(self):
         grp = 'https://drive.google.com/uc?id=1-9s3OtgVzO46Fxy9ZUHS5wajKA-Z27iZ'
         grp_out = 'indexes/emb/grp'
         
@@ -86,7 +86,7 @@ class DistilBert(myModel):
         tre = 'https://drive.google.com/uc?id=1-1BPb-FGSA32gx_zrXh6guTOkQ9GuSSS'
         tre_out = 'indexes/emb/tre'
         
-        gdown.download(grp, output, quiet=False)
+        gdown.download(grp, grp_out, quiet=False)
         gdown.download(obj, obj_out, quiet=False)
         gdown.download(prf, prf_out, quiet=False)
         gdown.download(tre, tre_out, quiet=False)

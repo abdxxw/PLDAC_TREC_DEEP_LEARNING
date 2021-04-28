@@ -104,7 +104,7 @@ def create_passage_expansion(output_folder,collection_path,predictions,max_docs_
     
 def genrate_index_of_expanded_passages(input_passage,output):
     #Method that generates the index of the expanded collection
-
+    return 0
 
     
 

@@ -1,6 +1,7 @@
 
 import json
 import os
+import gdown
 
 def convert_collection_to_json(collection_path,output_folder,max_docs_per_file=1000000):
     ####convert collection to json###########
@@ -103,7 +104,10 @@ def create_passage_expansion(output_folder,collection_path,predictions,max_docs_
     output_jsonl_file.close()
     
 
-
+def from_prebuilt_index():
+    grp = 'https://drive.google.com/uc?id=1KnhispEvKnd5O-f9iKojiBm7IaAB9rcr'
+    grp_out = 'indexes/expansion'
+    gdown.download(grp, grp_out, quiet=False)
     
 
 

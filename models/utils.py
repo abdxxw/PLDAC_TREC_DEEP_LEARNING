@@ -71,7 +71,7 @@ def cosine_similarity(x,y):
         return np.dot(x, y) / (np.linalg.norm(x) * np.linalg.norm(y))
     
     
-def trec_eval(qrels,run,metrics=["map","ndcg","P_10","Rprec","recip_rank"]):
+def trec_eval(qrels,run,metrics=["map","ndcg","ndcg_cut_10","recip_rank","P_10","Rprec"]):
 
     with open(qrels, 'r') as f_qrel:
         qrel = pytrec_eval.parse_qrel(f_qrel)
@@ -136,6 +136,9 @@ def combine_models(fileSave, firstResults, secondResults, alpha, modelName):
                 hits[document] = runsec.get(query,dict()).get(document,0) * alpha + runfst.get(query,dict()).get(document,0) * (1-alpha)
             sor = sorted(hits.items(),reverse = True, key=lambda x: x[1])
             hits = dict(sor)
-
+            i=1
             for doc,score in hits.items():
-                _ = runfile.write('{} Q0 {} {} {:.6f} {}\n'.format(query, doc, i+1, score,modelName))
+                _ = runfile.write('{} Q0 {} {} {:.6f} {}\n'.format(query, doc, i, score,modelName))
+                if i == 1000:
+                    break
+                i+=1

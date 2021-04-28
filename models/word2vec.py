@@ -63,14 +63,12 @@ class Word2Vec(myModel):
         
         for key,score in q_results.items():
 
-            query = prepareText(query)
-
             chaine=self.searcher.doc(key).raw()
             chaine=json.loads(chaine)['contents']
-            chaine = prepareText(chaine)
-
-            out[key] = cosine_similarity(self.vectorize(query),self.vectorize(chaine))
-
+            try:
+                out[key] = cosine_similarity(self.vectorize(query),self.vectorize(chaine))
+            except:
+                out[key] = 0
         sor = sorted(out.items(),reverse = True, key=lambda x: x[1])
         return dict(sor)
 

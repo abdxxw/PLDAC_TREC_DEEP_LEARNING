@@ -1,4 +1,4 @@
-from models.model import BM25
+from models.BM25 import BM25
 from models.utils import *
 import zipfile
 

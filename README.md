@@ -12,3 +12,4 @@ BM25 Pyserini | PassageExpension | QueryExpension | FastText | Word2Vec | Distil
 |  |  |  |  |  | x | 0.9302 | 0.6239 | 0.6577 | 0.3737
 | x | x |  |  |  |  | 0.8884 | 0.6929 | 0.6417 | 0.4625
 | x |  |  |  |  | x | 0.9537 | 0.6963 | 0.6685 | 0.4518
+| x | x |  |  |  | x | 0.9364 | 0.7338 | 0.7151 | 0.5253

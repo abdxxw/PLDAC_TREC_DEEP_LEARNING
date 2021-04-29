@@ -103,5 +103,22 @@ def create_passage_expansion(output_folder,collection_path,predictions,max_docs_
                 print(i)
     output_jsonl_file.close()
     
+def create_index_by_expansion():
+    file_index = 0
+    with open(collection_path, encoding='utf-8') as f:
+        for i, line in enumerate(f):
+            doc_id, doc_text = line.rstrip().split('\t')
+            if i % max_docs_per_file == 0:
+                if i > 0:
+                    output_jsonl_file.close()
+                output_path = os.path.join(output_folder, 'docs{:02d}.json'.format(file_index))
+                output_jsonl_file = open(output_path, 'w', encoding='utf-8', newline='\n')
+                file_index += 1
+            output_dict = {'id': doc_id, 'contents': doc_text}
+            output_jsonl_file.write(json.dumps(output_dict) + '\n')
 
+            if i % 100000 == 0:
+                print(i)
+    output_jsonl_file.close() 
+    
 

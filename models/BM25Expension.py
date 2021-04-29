@@ -1,8 +1,9 @@
 from models.BM25 import BM25
 from models.utils import *
 import zipfile
+import gdown
 
-class BM25Expension(BM25):
+class BM25Expansion(BM25):
 
     def __init__(self, data=None, generate=False,passage=True,query=True):
         self.name="BM25"
@@ -16,7 +17,7 @@ class BM25Expension(BM25):
             
         if(self.passage):
             
-            self.name=self.name+"+Expension"
+            self.name=self.name+"+Expansion"
             if self.data == None:
                 self.data = "indexes/expansion/"
             self.searcher = SimpleSearcher(self.data)

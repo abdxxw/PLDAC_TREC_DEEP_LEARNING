@@ -5,12 +5,12 @@ import gdown
 
 class BM25Expansion(BM25):
 
-    def __init__(self, data=None, generate=False,passage=True,query=True):
+    def __init__(self, data=None, prebuilt=False,passage=True,query=True):
         self.name="BM25"
         self.data = data
         self.passage = passage
         self.query = query
-        if generate == True:
+        if prebuilt == True:
             self.passage = True
             self.get_prebuilt_expension_index()
             self.data = "indexes/expansion/"
@@ -33,7 +33,6 @@ class BM25Expansion(BM25):
             
     def get_prebuilt_expension_index(self):
         if self.passage == True:
-            print("downloading...")
             
             data = 'https://drive.google.com/uc?id=1hr-SspPUWI9YvwaLFqDgZudE6i68QQQP'
             data_out = 'indexes/expansion/ind.zip'

@@ -35,7 +35,7 @@ class BM25Expansion(BM25):
         if self.passage == True:
             print("downloading...")
             
-            data = 'https://drive.google.com/uc?id=1NwdPunTewVGknkp5GB8gylfoLM_c46nO'
+            data = 'https://drive.google.com/uc?id=1hr-SspPUWI9YvwaLFqDgZudE6i68QQQP'
             data_out = 'indexes/expansion/ind.zip'
             gdown.download(data, data_out, quiet=False)
             

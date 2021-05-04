@@ -144,24 +144,3 @@ def combine_models(fileSave, firstResults, secondResults, alpha, modelName):
                 i+=1
                 
             
-def modele_ensemble( self, list_run_files, fileOut ) :
-    #list_run_files = une liste de tous les runs
-
-    list_dict_files = []
-    rerank_results = dict()
-    for file in list_run_files: 
-      with open(file) as f :
-        list_dict_files.append(pytrec_eval.parse_run(f))
-    rerank_results = list_dict_files[0]    
-    for idQ in rerank_results :
-      top_k =  len( rerank_results[idQ])
-      for dict_file in list_dict_files[1:]:
-        for idDoc in dict_file[idQ]:
-          rerank_results[idQ][idDoc] += dict_file[idQ][idDoc]
-      rerank_results[idQ] = {key : value for key, value in sorted( rerank_results[idQ].items() , key=lambda item: item[1] , reverse = True )}
-
-    with open(fileOut,'w') as runfile:
-      for qid in rerank_results :
-        for doc_id , i in zip( rerank_results[qid], range(top_k)):
-          _ = runfile.write('{} Q0 {} {} {:.6f} Ensemble\n'.format(qid, doc_id, i+1, rerank_results[qid][doc_id])) 
-          

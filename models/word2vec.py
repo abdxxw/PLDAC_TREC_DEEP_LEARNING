@@ -67,6 +67,8 @@ class Word2Vec(myModel):
             chaine=json.loads(chaine)['contents']
             try:
                 out[key] = cosine_similarity(self.vectorize(query),self.vectorize(chaine))
+                if len(out[key] > 1):
+                    out[key] = 0
             except:
                 out[key] = 0
         sor = sorted(out.items(),reverse = True, key=lambda x: x[1])

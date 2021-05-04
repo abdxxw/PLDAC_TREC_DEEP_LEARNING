@@ -27,7 +27,7 @@ class BM25Expansion(BM25):
             self.searcher = SimpleSearcher.from_prebuilt_index(self.data)
             
         if query == True:
-            self.searcher.set_rm3(10, 10, 0.5)
+            self.searcher.set_rm3(7, 3, 0.9)
             self.name=self.name+"+RM3"
             
             

@@ -103,5 +103,5 @@ def create_passage_expansion(output_folder,collection_path,predictions,max_docs_
                 print(i)
     output_jsonl_file.close()
     
-
+    
 

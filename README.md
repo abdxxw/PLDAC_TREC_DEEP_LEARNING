@@ -13,3 +13,15 @@ BM25 Pyserini | Passage Expension | Query Expension | DistilBERT (First Stage) |
 | x | x |  |  |  |  | 0.8884 | 0.6929 | 0.6417 | 0.4625
 | x |  |  | x |  |  | 0.9537 | 0.6963 | 0.6685 | 0.4518
 | x | x |  | x |  |  | 0.9364 | 0.7338 | 0.7151 | 0.5253
+
+
+Validation Results on MSMARCO dev dataset 6980 queries
+
+
+Model | MRR | NDCG@1000 | NDCG@10 | MAP
+------------ |------------ | ------------- | ------------- | ------------- 
+| BM25 | 0.1960 | 0.3116 | 0.2284 | 0.1926
+| BM25 Expension | 0.2848 | 0.4099 | 0.3329 | 0.2805
+| DistilBERT | 0.3303 | 0.4411 | 0.3747 | 0.3250
+| BM25 EXP + DistilBERT | 0.3575 | 0.4757 | 0.4096 | 0.3524
+| miniLM reranking | 0.4167 | 0.5273 | 0.4713 | 0.4107

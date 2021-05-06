@@ -15,7 +15,7 @@ BM25 Pyserini | Passage Expension | DistilBERT (First Stage) | FastText Rerankin
 | x | x | x |  |  | 0.9364 | 0.7338 | 0.7151 | 0.5253
 
 
-Validation Results on MSMARCO dev dataset 6980 queries
+Validation Results on MSMARCO 2020 dev dataset 6980 queries
 
 
 Model | MRR | NDCG@1000 | NDCG@10 | MAP

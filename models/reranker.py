@@ -31,9 +31,9 @@ class Reranker(myModel):
             chaine=json.loads(chaine)['contents']
     
             tmp.append((query,chaine))
-        scores = model.predict(tmp)
+        scores = self.model.predict(tmp)
         out = dict()
-        for i,key in enumerte(q_results.keys()):
+        for i,key in enumerate(q_results.keys()):
           out[key] = scores[i]
         sor = sorted(out.items(),reverse = True, key=lambda x: x[1])
         return dict(sor)

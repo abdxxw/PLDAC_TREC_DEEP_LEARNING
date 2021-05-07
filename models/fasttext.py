@@ -8,16 +8,17 @@ class Fasttext(myModel):
     def __init__(self, file,searcher):
         self.name = 'FastText'
         self.firststage = file
+        self.oldrun = run_parser(file)
         fasttext.util.download_model('en', if_exists='ignore')
         self.model = fasttext.load_model('cc.en.300.bin')
         self.searcher = searcher
 
     def set_firststage(self,file):
         self.firststage= file
+        self.oldrun = run_parser(file)
         
     def get_scorces_query(self, id,query,k):
-        oldrun = run_parser(self.firststage)
-        q_results = oldrun.get(id,dict())
+        q_results = self.oldrun.get(id,dict())
         out = dict()
         
         for key,score in q_results.items():

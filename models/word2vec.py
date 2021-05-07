@@ -8,6 +8,7 @@ class Word2Vec(myModel):
     def __init__(self, file,searcher,ponderation=False):
         self.name = 'Word2Vec'
         self.firststage = file
+        self.oldrun = run_parser(file)
         self.searcher = searcher
         self.ponderation = ponderation
 
@@ -20,6 +21,7 @@ class Word2Vec(myModel):
 
     def set_firststage(self,file):
         self.firststage= file
+        self.oldrun = run_parser(file)
         
 
         
@@ -57,8 +59,7 @@ class Word2Vec(myModel):
         return vector
 
     def get_scorces_query(self, id,query,k):
-        oldrun = run_parser(self.firststage)
-        q_results = oldrun.get(id,dict())
+        q_results = self.oldrun.get(id,dict())
         out = dict()
         
         for key,score in q_results.items():

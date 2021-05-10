@@ -27,12 +27,6 @@ import pytrec_eval
 
 
 
-
-
-
-
-
-
 def prepareText(data,lower=True,punc=True,chiffres=True,stemming=True,stopword=True,lang='english'):
 
     stop_words = set(stopwords.words(lang))
@@ -116,6 +110,20 @@ def run_parser(file):
       return pytrec_eval.parse_run(f_run)
 
 
+def get_ndcg(qrels,run):
+
+    with open(qrels, 'r') as f_qrel:
+        qrel = pytrec_eval.parse_qrel(f_qrel)
+
+    with open(run, 'r') as f_run:
+        run = pytrec_eval.parse_run(f_run)
+
+    evaluator = pytrec_eval.RelevanceEvaluator(qrel, ["ndcg"])
+    results = evaluator.evaluate(run)
+    value = pytrec_eval.compute_aggregated_measure("ndcg", [query_measures["ndcg"] for query_measures in results.values()])
+    return value
+
+
 def combine_models(fileSave, firstResults, secondResults, alpha, modelName):
     
     with open(firstResults, 'r') as fst:
@@ -144,24 +152,51 @@ def combine_models(fileSave, firstResults, secondResults, alpha, modelName):
                 i+=1
                 
             
-def modele_ensemble( self, list_run_files, fileOut ) :
-    #list_run_files = une liste de tous les runs
+def modele_ensemble(fileSave, firstResults, secondResults,thirdResults,alpha,beta,gamma):
+    
+    with open(firstResults, 'r') as fst:
+        runfst = pytrec_eval.parse_run(fst)
+    
+    with open(secondResults, 'r') as sec:
+        runsec = pytrec_eval.parse_run(sec)
 
-    list_dict_files = []
-    rerank_results = dict()
-    for file in list_run_files: 
-      with open(file) as f :
-        list_dict_files.append(pytrec_eval.parse_run(f))
-    rerank_results = list_dict_files[0]    
-    for idQ in rerank_results :
-      top_k =  len( rerank_results[idQ])
-      for dict_file in list_dict_files[1:]:
-        for idDoc in dict_file[idQ]:
-          rerank_results[idQ][idDoc] += dict_file[idQ][idDoc]
-      rerank_results[idQ] = {key : value for key, value in sorted( rerank_results[idQ].items() , key=lambda item: item[1] , reverse = True )}
+    with open(thirdResults, 'r') as third:
+        runthird = pytrec_eval.parse_run(third)
 
-    with open(fileOut,'w') as runfile:
-      for qid in rerank_results :
-        for doc_id , i in zip( rerank_results[qid], range(top_k)):
-          _ = runfile.write('{} Q0 {} {} {:.6f} Ensemble\n'.format(qid, doc_id, i+1, rerank_results[qid][doc_id])) 
+    with open(fileSave, 'w') as runfile:
+        allqueries = list(set().union(list(runfst.keys()), list(runsec.keys()),list(runthird.keys())))
+
+        for query in allqueries:
+            docs1 = list(runfst.get(query,dict()).keys())
+            docs2 = list(runsec.get(query,dict()).keys())
+            docs3 = list(runthird.get(query,dict()).keys())
+            hits = dict()
+            for document in list(set().union(docs1,docs2,docs3)):
+                hits[document] = runfst.get(query,dict()).get(document,0) * alpha + runsec.get(query,dict()).get(document,0) * beta  + runthird.get(query,dict()).get(document,0) * gamma
+            sor = sorted(hits.items(),reverse = True, key=lambda x: x[1])
+            hits = dict(sor)
+
+            for doc,score in hits.items():
+                _ = runfile.write('{} Q0 {} {} {:.6f} "Combined_model"\n'.format(query, doc, 0 , score))
+
+
+def optimisation_param_combin(firstResults,secondResults,thirdResults,fileSave,qrels,start1, end1, n1, start2, end2, n2,start3, end3, n3):
+
+    alpha = np.arange(start1, end1, n1)
+    alpha = [round(x, 1) for x in alpha]
+    beta = np.arange(start2, end2, n2)
+    beta = [round(x, 1) for x in beta]
+    gamma = np.arange(start3, end3, n3)
+    gamma = [round(x, 1) for x in gamma]
+    
+    history = []
+    couple_history = []
+    for a in alpha:
+        for b in beta:
+          for g in gamma : 
+              modele_ensemble(fileSave,firstResults,secondResults,thirdResults,a,b,g)
+              history.append(get_ndcg(qrels,fileSave)) 
+              couple_history.append((a,b,g))            
+    best = couple_history[np.argmax(np.asarray(history))]
+    return best
           

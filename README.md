@@ -25,3 +25,5 @@ Model | MRR | NDCG@1000 | NDCG@10 | MAP
 | DistilBERT | 0.3303 | 0.4411 | 0.3747 | 0.3250
 | BM25 EXP + DistilBERT | 0.3575 | 0.4757 | 0.4096 | 0.3524
 | miniLM reranking | 0.4167 | 0.5273 | 0.4713 | 0.4107
+| tinyBERT reranking | 0.3428 | 0.4633 | 0.3941 | 0.3381
+| ELECTRA reranking | 0.3861 | 0.5019 | 0.4417 | 0.3802

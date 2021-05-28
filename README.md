@@ -1,6 +1,11 @@
 # RI models
 Some models that we used on MS-MARCO Passage ranking task.
 
+
+# Our CARP6 model : 
+
+![alt text](https://i.ibb.co/HNm24wx/all.png)
+
 # Results :
 Validation Results on 2019 TREC 200 queries
 
@@ -15,8 +20,7 @@ BM25 Pyserini | Passage Expension | DistilBERT (First Stage) | FastText Rerankin
 | x | x | x |  |  | 0.9364 | 0.7338 | 0.7151 | 0.5253
 
 
-Validation Results on MSMARCO 2020 dev dataset 6980 queries
-
+Validation Results on MSMARCO dev dataset 6980 queries
 
 Model | MRR | NDCG@1000 | NDCG@10 | MAP
 ------------ |------------ | ------------- | ------------- | ------------- 
@@ -27,3 +31,4 @@ Model | MRR | NDCG@1000 | NDCG@10 | MAP
 | miniLM reranking | 0.4167 | 0.5273 | 0.4713 | 0.4107
 | tinyBERT reranking | 0.3428 | 0.4633 | 0.3941 | 0.3381
 | ELECTRA reranking | 0.3861 | 0.5019 | 0.4417 | 0.3802
+

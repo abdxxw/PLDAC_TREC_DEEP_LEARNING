@@ -9,12 +9,12 @@ Some models that we used on MS-MARCO Passage ranking task.
 
 # Term Expension : 
 
-![alt text](https://ibb.co/QMcSyPt)
+![alt text](https://i.ibb.co/2sDsVyW/emb.png)
 
 
 # Embedding Index : 
 
-![alt text](https://ibb.co/mXLXZGb)
+![alt text](https://i.ibb.co/hVMQ3Bw/exp.png)
 
 # Results :
 Validation Results on 2019 TREC 200 queries
